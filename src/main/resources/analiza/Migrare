@@ -1,0 +1,28 @@
+* Pentru migrare 1.4 --> 8 e nevoie de analiza fiecarui ghid de migrare ( -> 1.5 -> 6.x -> 7.x -> 8.x )
+
+* Efortul tine de cantitatea de Wicket folosita in proiect
+
+* Trebuie actualizat si JDK, Servlet API, Logging, Junit4
+__________________________________________________________________________________________________________________
+
+--> spre 1.5
+
+- Validatorii extind Behavior 
+- Remove invocari deprecated
+- Remove FormComponent.setPersistence()
+- StringResourceModel e schimbat 
+	-- constructorul cu valori default introduce erori pt ca compiler-ul face match, dar semantica e schimbata
+	-- StringResourceModel#setLocalizer() was removed
+- Removed IComponentBorder
+- Component.getStyle() implementation changed
+- Component.getMarkupId() implementation changed 
+	-- setOutputMarkupId(true) nu au "id" attributes
+- AbstractSingleSelectChoice foloseste empty String in loc de NO_SELECTION_VALUE ("-1")
+- Cand vrei sa randezi o componenta >> component.render().
+- Extensia pt fisierele de proprietati de tip xml e schimbata din .xml in .properties.xml.
+- ITab.getPanel() now returns WebMarkupContainerWithAssociatedMarkup
+- Removed MarkupContainer.isTransparentResolver() pentru IComponentResolver
+- IComponentResolver.resolve API changed
+- addComponentInstantiationListener(new SpringComponentInjector(this, applicationContext));
+	la getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext))
+- 
