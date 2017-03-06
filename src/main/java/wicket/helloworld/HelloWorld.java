@@ -1,22 +1,22 @@
 package wicket.helloworld;
 
-import org.apache.wicket.PageParameters;
-import org.apache.wicket.markup.html.CSSPackageResource;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 public class HelloWorld extends WebPage {
 	
-	private static final CompressedResourceReference MYPAGE_JS = new CompressedResourceReference(HelloWorld.class, "/js/search-logic.js"); 
-	private static final CompressedResourceReference MYPAGE_CSS = new CompressedResourceReference(HelloWorld.class, "/css/helloworld-page-style.css");
-	
-	public HelloWorld(final PageParameters parameters) {
-		
-		add(JavascriptPackageResource.getHeaderContribution(MYPAGE_JS));
-		add(CSSPackageResource.getHeaderContribution(MYPAGE_CSS));
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public HelloWorld() {
 		
 		add(new Label("page-title", "Hello World, Wicket"));
 
@@ -39,5 +39,12 @@ public class HelloWorld extends WebPage {
 		
 
 	}
+	
+	@Override
+	public void renderHead(IHeaderResponse response) {
+	    response.render(CssHeaderItem.forReference(new CssResourceReference(HelloWorld.class, "/css/helloworld-page-style.css")));
+	    response.render(JavaScriptReferenceHeaderItem.forReference( new JavaScriptResourceReference(HelloWorld.class, "/js/search-logic.js")));
+	}
+	
 
 }
