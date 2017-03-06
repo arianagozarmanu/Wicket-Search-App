@@ -10,8 +10,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<version>1.4.17</version>
+			<artifactId>wicket-core</artifactId>
+			<version>8.0.0-M4</version>
 		</dependency>
 
 		<!-- slf4j-log4j -->
