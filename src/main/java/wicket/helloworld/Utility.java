@@ -10,6 +10,8 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 
 public final class Utility {
 
+	private static final long MEGABYTE = 1024L * 1024L;
+	 
 	public static void addLinkListItems(RepeatingView listItems) {
 
 		for (int i = 0; i < 100; i++) {
@@ -25,5 +27,9 @@ public final class Utility {
 	public static String nextSessionId() {
 		SecureRandom random = new SecureRandom();
 		return new BigInteger(130, random).toString(32);
+	}
+	
+	public static long bytesToMegabytes(long bytes) {
+		    return bytes / MEGABYTE;
 	}
 }

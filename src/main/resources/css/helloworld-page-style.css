@@ -30,3 +30,7 @@
     width: 50%;
 }
 
+.no-results-txt {
+	color: red;
+	margin-left: 30%;
+}
