@@ -25,4 +25,38 @@ ________________________________________________________________________________
 - IComponentResolver.resolve API changed
 - addComponentInstantiationListener(new SpringComponentInjector(this, applicationContext));
 	la getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext))
-- 
+- Visitor nu mai returneaza valori, ci foloseste functii pt manipulare traversare
+- in loc de getParameter() acum poti sa specifici tipul gen getPostParameteres
+- Page mounting diferit
+- schimbarea la comunicare securizata (https) e schimbata
+- randarea Header-ului schimbata
+- adaugarea fisierelor externe (css, js) e schimbata (cu renderHead method)
+- Removed TextTemplateHeaderContributor / StringHeaderContributor ; se fac cu Behavior ma multe
+- WebRequestCycle removed.  onRuntimeException is gone.
+- ImageMap removed
+- in IResourceSettings method setAddLastModifiedTimeToResourceReferenceUrl() replaced by IResourceCachingStrategy
+- Behavior interface refactored into abstract Behavior class.
+- redirectare la non wicket page schimbata
+
+~ 49 de motode + clase schimbate ; ~ 26 de schimbari mentionate in documentatie
+__________________________________________________________________________________________________________________
+
+--> spre 6
+
+- IDataProvider foloseste long, deci toate pachetele cu repeaters trebuie schimbate prin trecere de la int la long
+- Validation schimbat, cu noi metode si inlaturarea unor clase vechi
+- Feedback messages despre componente stocate in metdata, nu in sesiune
+- Use JQuery as a backing library for Wicket Ajax
+- AjaxRequestTarget is an interface
+- adaugarea fisierelor externe (css, js) e schimbata **
+- package.properties renamed to wicket-package.properties
+- o.a.w.IComponentSource and o.a.w.ComponentSourceEntry are removed
+- o.a.w.Component#onMarkupAttached() has been dropped in favour of o.a.w.Component#onInitialize().
+
+~ 20 de motode + clase schimbate ; ~7 schimbari mentionate in documentatie
+_______________________________________________________________________________________________________
+
+--> spre 8
+
+Exemple de compile erorrs : pt 172k linii de cod -> 70 erori 
+							pt 1M linii 		 -> 346 erori
