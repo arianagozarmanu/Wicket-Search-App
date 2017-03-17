@@ -2,7 +2,7 @@
 
 * Efortul tine de cantitatea de Wicket folosita in proiect
 
-* Trebuie actualizat si JDK, Servlet API, Logging, Junit4
+* Trebuie actualizat si Java, Servlet API, Logging, Junit4, Tomcat
 __________________________________________________________________________________________________________________
 
 --> spre 1.5
@@ -38,7 +38,7 @@ ________________________________________________________________________________
 - Behavior interface refactored into abstract Behavior class.
 - redirectare la non wicket page schimbata
 
-~ 49 de motode + clase schimbate ; ~ 26 de schimbari mentionate in documentatie
+~ 49 de motode + clase schimbate ; ~26 de schimbari mentionate in documentatie
 __________________________________________________________________________________________________________________
 
 --> spre 6
@@ -54,9 +54,123 @@ ________________________________________________________________________________
 - o.a.w.Component#onMarkupAttached() has been dropped in favour of o.a.w.Component#onInitialize().
 
 ~ 20 de motode + clase schimbate ; ~7 schimbari mentionate in documentatie
-_______________________________________________________________________________________________________
+__________________________________________________________________________________________________________________
+
+--> spre 7
+
+- Switch from json.org to open-json (schimbare imports de la org.apache.wicket.ajax.json.*  >> org.json.* )
+- org.apache.wicket.util.convert.converter.AbstractDecimalConverter's #getNumberFormat() and #setNumberFormat() has been removed in favour of #newNumberFormat()
+- org/apache/wicket/core/util/io/SerializableChecker is replaced with org.apache.wicket.core.util.objects.checker.CheckingObjectOutputStream used to check problems during object serialization
+- org/apache/wicket/markup/html/border/BoxBorder is removed
+- org.apache.wicket.Component#renderHead(HtmlHeaderContainer) is renamed to Component#internalRenderHead(HtmlHeaderContainer)
+- org.apache.wicket.request.resource.ResourceReference#getDependencies() returns a mutable List<HeaderItem>
+- If a null value is interpolated into the resourceKey, it will now be represented as 'null' instead of the variableName
+- org.apache.wicket.model.StringResourceModel constructor accepts IModel<String> for its default value 
+- org.apache.wicket.extensions.validation.validator.+Xyz+Validator#decorate() works with IValidationError
+- org.apache.wicket.ajax.attributes.AjaxRequestAttributes#setAllowDefault() is deprecated in favour of #setPreventDefault() (Same for #isAllowDefault() - use #isPreventDefault())
+- org.apache.wicket.ajax.attributes.AjaxRequestAttributes#eventPropagation is BUBBLE by default
+- org.apache.wicket.ajax.form.AjaxFormValidatingBehavior doesn't use static methods
+- org.apache.wicket.ajax.AjaxRequestTarget.IListener#updateAjaxAttributes() is introduced
+- org.apache.wicket.ISessionListener#onUnbound(String) is added to notify all ISessionListeners  when a Session is unbound.
+- WicketTester uses org.junit.Assert instead of junit.framework.Assert
+- If an exception is thrown during processing in BaseWicketTester  use #getLastRequest() to access request
+- org.apache.wicket.util.tester.WicketTester#assertErrorMessages and org.apache.wicket.util.tester.WicketTester#assertInfoMessages accept a list of java.io.Serializable as argument
+- org.apache.wicket.Component#setMetaData() value could be only a Serializable
+- org.apache.wicket.Application#getHeaderContributorListenerCollection() is renamed to #getHeaderContributorListeners()
+- supports authorization for requests to resources additionally to authorization for components - org.apache.wicket.authorization.IAuthorizationStrategy#isResourceAuthorized(IResource, PageParameters)
+- org.apache.wicket.Component#setResponsePage() now accepts org.apache.wicket.request.component.IRequestablePage instead of org.apache.wicket.Page
+- AutoCompleteTextField doesn't support useHideShowCoveredIEFix; IE7 is not supported officially anymore 
+- org.apache.wicket.markup.html.form.TextField#getInputType() returns String array, not String
+- AuthenticatedWebSession#authenticate is protected instead of public
+- All setter methods in AbstractResource.ResourceResponse class now will return this instance
+- All 'QuirkXyz' properties has been removed from org.apache.wicket.protocol.http.ClientProperties  //Xyz means any string
+- org.apache.wicket.request.resource.AbstractResource#flushResponseAfterHeaders() is removed 
+- org.apache.wicket.markup.html.IPackageResourceGuard#acceptAbsolutePath(Class, String) renamed to IPackageResourceGuard#accept(String)
+- All IXyzSettings are removed
+- org.apache.wicket.request.resource.caching.version.IResourceVersion#getVersionPattern() is added to extract the version from the url.
+- org.apache.wicket.markup.html.form.IChoiceRenderer#getObject(String idValue, IModel<? extends List<? extends T>> choices) is added to return the object that produces idValue when org.apache.wicket.markup.html.form.IChoiceRenderer#getIdValue(T object, int index) 
+- remove org.apache.wicket.request.mapper.mount.MountMapper
+- Renamed all *AjaxResponse classes to *PartialPageUpdate 
+- Type of the parameter passed to AuthenticatedWebApplication#onUnauthorizedPage() has changed from org.apache.wicket.Page to org.apache.wicket.Component 
+- PropertyColumn#createLabelModel has been renamed to getDataModel
+- #onSelectionChanged() use generic type as argument
+- markup is changed from <table> to nested <div>s for Palette and Wizard
+- applications can provide their own CSS class names when needed by overriding some keys in their i18n properties files (e.g. in MyApplication.properties) -- exista lisat de default keys cu valorile lor
+- FormComponent#convertInput() is public from rpotected
+- Components' methods and constructors which use collections have been updated to follow best practices.
+	--  List of updated components:
+		AbstractChoice, CheckGroup, FileUploadField, ListView, PageableListView, PropertyListView, AbstractPageableView, RefreshingView,
+		ListDataProvider, AjaxEditableChoiceLabel, Palette, SelectOption, SelectOptions, ChoiceFilter, ChoiceFilteredPropertyColumn
+- All classes from package org.apache.wicket.util.upload.** are now in org.apache.commons.fileupload.**
+- Rename PageSettings#recreateMountedPagesAfterExpiry to #recreateBookmarkablePagesAfterExpiry
+- Rename IStaticCacheableResource#getCacheableResourceStream() to #getResourceStream()
+- Url#getQueryString() now behaves as HttpServletRequest behaves
+- org.apache.wicket.request.http.WebResponse encodes the value of the "filename" in Content-Disposition header (Ex: fileNäme.txt -> fileN%C3%A4me.txt)
+- org.apache.wicket.markup.html.form.FormComponentLabel outputs "required", "disabled" and "error" classes
+- The css class is now only applied to the li element and not to the span inside
+- FeedbackPanel#newMessageItem() method has been added to allow customization of each feedback message item
+- Only AjaxFallback** components prevent the default JavaScript , AjaxEventBehavior doesn't prevent it ->  default behavior should be prevented in any use case: attributes.setPreventDefault(true);
+- Ajax behaviors let JavaScript events bubble by default (not bubble: attributes.setEventPropagation(EventPropagation.STOP/STOP_IMMEDIATE);
+- PackageTextTemplate loads its content lazily
+- RadioChoice and CheckBoxMultipleChoice no longer append <br/> as suffix. Use CSS for styling
+	-- To revert the old behavior for easier migration the application could use org.apache.wicket.markup.html.form.RadioChoiceWicket6Listener and org.apache.wicket.markup.html.form.CheckBoxMultipleChoiceWicket6Listener.
+	   These component instantiation listeners are marked as deprecated and will be removed with Wicket 8.0.
+- AbstractAjaxTimerBehavior no update its hosting component when restarted. Stop and restart is possible on non-Ajax requests.
+- FileParts must be parsed explicitly before trying to read them 
+- AbstractDefaultAjaxBehavior's #getSuccessHandler(), #getFailureHandler(), #getChannel() and #getPrecondition() are removed
+- The old Tree component in wicket-extensions is removed.  Use the new Tree component introduced in Wicket 6.0.0.
+- Wicket.Window.unloadConfirmation has been removed
+- AllVisitFilter has been removed. Use IVisitFilter.ANY instead.
+- Label constructor with String argument has been removed. Use Serializable argument instead.
+- Use RangeValidator.* instead of MinimumValidator and MaximumValidator.
+- IPageLink has been removed 
+- org.apache.wicket.markup.html.form.EnumChoiceRenderer#postprocess() is removed
+- Using keyboard UP and DOWN keys will loop thru the AutoCompleter's options
+- Form#findSubmittingComponent() doesn't throw exceptions for invisible/disabled submitters 
+
+~64 schimbari mentionate in documentatie
+_________________________________________________________________________________________________________________
 
 --> spre 8
 
 Exemple de compile erorrs : pt 172k linii de cod -> 70 erori 
 							pt 1M linii 		 -> 346 erori
+							
+- org.apache.wicket.util.IProvider inlocuit cu Java 8 java.util.function.Supplier<T>
+- org.apache.wicket.util.IContextProvider inlocuit de Java 8 java.util.function.Function<C, T>
+- e recomandata utilizatea TagTester si WicketTestCase#executeTest() in locul org.apache.wicket.protocol.http.documentvalidation.HtmlDocumentValidator
+- IModel nu necesita o implementare pentru #setObject(Object) 
+- AjaxButton, AjaxLink si AjaxFallbackButton nu mai au ca si al 2 lea argument un FORM. Poti face getForm().
+- RequestCycle#find(Class<T>) returns java.util.Optional
+		** During migration you should check your old code for places where the AjaxRequestCycle (now an Optional<AjaxRequestTarget>) is compared with null (Pitfall
+- AjaxFallback** components now use java.util.Optional. This way the application developer should not forget to check that the AjaxRequestTarget is not null. 
+- AbstractChoice#getChoices() is 'final' now 
+- IResourceListener, IBehaviorListener, IOnChangeListener, ILinkListener are replaced by the generic method IRequestListener#onRequest()
+- ListenerInterfaceRequestHandler was renamed to ListenerRequestHandler
+- Component's and Behavior's #canCallListenerInterface() were renamed to #canCallListener()
+- PageSettings#getCallListenerInterfaceAfterExpiry() was renamed to #getCallListenerAfterExpiry.
+- FormComponent#clearInput() e non-final, containerele ca FormComponentPanel por suprascrie metoda si pot apela #clearInput() pe fiii de tip FormComponent.
+- org.apache.wicket.resource.DynamicJQueryResourceReference will contribute jQuery ver. 2.x - modern browsers si ver. 1.x - Internet Explorer older than ver. 9.
+- AuthenticatedWebSession#singOut() now is an alias of Session#invalidate()
+- SecuritySettings#enforceMounts(true) disables BookmarkableMapper
+		-- If this setting is enabled then a page could not be requested via /wicket/bookmarkable/com.example.PageName
+- The experimental integration for Atmosphere has been removed because of stability issues.
+- Removed IMountedRequestMapper and implementation, ZeroPaddingIntegerConverter, WildcardCollectionModel, WildcardListModel, WildcardSetModel
+- PropertyResolver.IClassCache is replaced by PropertyResolver.IPropertyLocator
+-  helper method for casting of models was moved from Model to IModel#of(IModel<?>)
+- IModel uses Java 8 default interface method for IDetachable#detach() 
+		**  a do-nothing implementation; custom implementations are not required to implement it when not needed
+- IRequestHandler uses Java 8 default interface method for IRequestHandler#detach() 
+- parameters ResourceStreamResource#getResourceStream() receives an instance of org.apache.wicket.request.resource.IResource.Attributes
+-  serializable versions of java.util.function.(Supplier|Consumer|Function|BiConsumer)  >>   org.apache.wicket.model.lambda.WicketSupplier, org.apache.wicket.model.lambda.WicketConsumer..
+- new implementation of IModel which uses Java 8 consumers and suppliers
+- IGenericComponent uses Java 8 default methods to implement #setModel(IModel<T>), #getModel(), #setModelObject(T) and #getModelObject()
+- IModel is a @FunctionalInterface
+- Provide LambdaColumn - IColumn implementation that uses java.util.function.Function
+- IColumn uses Java 8 default interface method for IColumn#isSortable() 
+- IColumn provides methods for column's header rowspan/colspan
+		** IColumn#getHeaderColspan() and IColumn#getHeaderRowSpan() return 1, so the header cells do not span by default.
+- RequestHandlerStack is now renamed to RequestHandlerExecutor.
+- IRequestCycleListeners are now notified of the execution of all IRequestHandlers, including those scheduled by other handlers, those replacing other handlers, and any handler executed due to an exception
+
+~32 schimbari notate in documentatie

@@ -5,23 +5,56 @@
 <title>Hello World</title>
 </head>
 <body>
-	<h1>
-        <span wicket:id="page-title"></span>
-	</h1>
-	<input type="text" id="search-input" onkeyup="searchFunction()" placeholder="Search for names..">
-	<br />
-	<span class="no-results-txt">No. of results:</span><span id="nr" class="no-results-txt"></span>
+	<div id="container">
+		<div id="header"></div>
+		<div id="content">
+			<div id="left-section">
+				<input type="text" id="search-input" onkeyup="searchFunction()" placeholder="Search for names..">
+				<span class="no-results-txt">No. of results: </span><span id="nr" class="no-results-txt"></span>
+				<ul id="search-items-list">
+					<li wicket:id="list-item"><a id="first-item" wicket:id="main-link"><span wicket:id="item-name"></span></a>
+											  <a id="second-item" wicket:id="add-item">Add to list</a>
+					</li>	
+				</ul>
+			</div>
+			<div id="right-section">
+				<table>
+					<tbody>
+						<tr>
+							<td><h2>Your selection</h2></td>
+							<td class="last-column"><h3><a wicket:id="remove-all" href="#">remove all</a></h3></td>
+						</tr>
+						<tr wicket:id="selection-list">
+							<td wicket:id="code"></td>
+							<td class="last-column"><a wicket:id="remove" href="#">remove</a></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr id="total">
+							<th>Total</th>
+							<td class="last-column" wicket:id="total"></td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<th>&nbsp;</th>
+							<td class="last-column"><input type="button" value="Check out" /></td>
+							<td>&nbsp;</td>
+						</tr>
+					</tfoot>
+				</table>
+				
+			</div>
+	
+	
 
-	<ul id="search-items-list">
-		<li wicket:id="list-item"><a wicket:id="Link"><span wicket:id="Text"></span></a></li>	
-	</ul>
 
-<!-- paginare 
-<span wicket:id="listview">
-        <span wicket:id="label">label</span><br>
-</span>
-<div wicket:id="navigator"></div>
--->
-
+	<!-- paginare 
+	<span wicket:id="listview">
+	        <span wicket:id="label">label</span><br>
+	</span>
+	<div wicket:id="navigator"></div>
+	-->
+		</div>
+	</div>
 </body>
 </html>
